@@ -50,16 +50,19 @@ function SearchPage() {
 
   const results = useMemo(() => {
     const query = q.trim().toLowerCase();
+    let filtered = getAllTechniquesAndSubs();
+
+    if (tactic) {
+      filtered = filtered.filter((t) => t.tactic.slug === tactic);
+    }
+
     const seen = new Set<string>();
-    let filtered = getAllTechniquesAndSubs().filter((t) => {
+    filtered = filtered.filter((t) => {
       if (seen.has(t.id)) return false;
       seen.add(t.id);
       return true;
     });
 
-    if (tactic) {
-      filtered = filtered.filter((t) => t.tactic.slug === tactic);
-    }
 
     if (query) {
       filtered = filtered.filter(

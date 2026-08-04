@@ -1,8 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { TACTICS, getTactic } from "@/data/attack";
+import { TACTICS, getTactic, type Tactic } from "@/data/attack";
 
 export const Route = createFileRoute("/tactics/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { tactic: Tactic } => {
     const tactic = getTactic(params.slug);
     if (!tactic) throw notFound();
     return { tactic };
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/tactics/$slug")({
 });
 
 function TacticPage() {
-  const { tactic } = Route.useLoaderData();
+  const { tactic } = Route.useLoaderData() as { tactic: Tactic };
   const prev = TACTICS.find((t) => t.order === tactic.order - 1);
   const next = TACTICS.find((t) => t.order === tactic.order + 1);
 

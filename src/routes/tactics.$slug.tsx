@@ -84,20 +84,24 @@ function TacticPage() {
         <ol className="divide-y divide-border rule-top">
           {tactic.techniques.map((tech) => (
             <li key={tech.id} className="py-6">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="rounded-sm border border-line-hard px-1.5 py-0.5 font-mono text-[11px]">
-                  {tech.id}
-                </span>
-                <h3 className="font-serif text-xl font-semibold">{tech.name}</h3>
-              </div>
-              <p className="mt-2.5 max-w-[68ch] text-[15.5px] text-ink-dim">{tech.summary}</p>
-              <p className="mt-3 max-w-[68ch] border-l-2 border-line-hard pl-4 text-[14.5px]">
-                <span className="font-mono text-[11px] uppercase tracking-wide text-ink-dim">
-                  Detect it with{" "}
-                </span>
-                <br />
-                {tech.detection}
-              </p>
+              <Link to="/techniques/$id" params={{ id: tech.id }} className="group block">
+                <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span className="rounded-sm border border-line-hard px-1.5 py-0.5 font-mono text-[11px]">
+                    {tech.id}
+                  </span>
+                  <h3 className="font-serif text-xl font-semibold group-hover:text-accent">
+                    {tech.name}
+                  </h3>
+                </div>
+                <p className="mt-2.5 max-w-[68ch] text-[15.5px] text-ink-dim">{tech.summary}</p>
+                <p className="mt-3 max-w-[68ch] border-l-2 border-line-hard pl-4 text-[14.5px]">
+                  <span className="font-mono text-[11px] uppercase tracking-wide text-ink-dim">
+                    Detect it with{" "}
+                  </span>
+                  <br />
+                  {tech.detection}
+                </p>
+              </Link>
             </li>
           ))}
         </ol>

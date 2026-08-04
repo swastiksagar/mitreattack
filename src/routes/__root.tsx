@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -128,26 +129,57 @@ function RootShell({ children }: { children: ReactNode }) {
 function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-border bg-background/92 backdrop-blur-sm">
-      <div className="mx-auto flex h-[60px] max-w-[980px] items-center justify-between px-7">
-        <Link to="/" className="flex items-center gap-2.5 font-mono text-[13px] font-semibold tracking-wide">
+      <div className="mx-auto flex h-[60px] max-w-[980px] items-center justify-between gap-4 px-7">
+        <Link to="/" className="flex shrink-0 items-center gap-2.5 font-mono text-[13px] font-semibold tracking-wide">
           <span className="flex h-5 w-5 items-center justify-center border-[1.5px] border-foreground text-[11px] font-bold">
             A
           </span>
           ATT&amp;CK Field Reference
         </Link>
-        <nav aria-label="Primary" className="hidden gap-5 font-mono text-xs text-ink-dim sm:flex">
-          <a href="/#matrix" className="transition-colors hover:text-foreground">
+        <nav aria-label="Primary" className="hidden gap-5 font-mono text-xs text-ink-dim lg:flex">
+          <Link to="/matrix" activeProps={{ className: "text-foreground" }} className="transition-colors hover:text-foreground">
             Matrix
-          </a>
+          </Link>
+          <Link to="/search" activeProps={{ className: "text-foreground" }} className="transition-colors hover:text-foreground">
+            Search
+          </Link>
+          <Link to="/playbooks" activeProps={{ className: "text-foreground" }} className="transition-colors hover:text-foreground">
+            Playbooks
+          </Link>
           <a href="/#how" className="transition-colors hover:text-foreground">
             How to read it
           </a>
-          <a href="/#triage" className="transition-colors hover:text-foreground">
-            Triage
-          </a>
         </nav>
+        <HeaderSearch />
       </div>
     </header>
+  );
+}
+
+function HeaderSearch() {
+  const navigate = useNavigate({ from: "/" });
+  return (
+    <form
+      role="search"
+      onSubmit={(e) => {
+        e.preventDefault();
+        const form = e.currentTarget;
+        const input = form.elements.namedItem("q") as HTMLInputElement;
+        navigate({ to: "/search", search: { q: input.value, tactic: "", sort: "relevance" } });
+      }}
+      className="hidden sm:block"
+    >
+      <label htmlFor="header-search" className="sr-only">
+        Search techniques
+      </label>
+      <input
+        id="header-search"
+        name="q"
+        type="search"
+        placeholder="T1059, LSASS…"
+        className="w-40 rounded-sm border border-border bg-background px-2.5 py-1.5 font-mono text-xs text-foreground placeholder:text-ink-faint focus:border-accent focus:outline-none lg:w-48"
+      />
+    </form>
   );
 }
 

@@ -14,7 +14,6 @@ import { Route as MatrixRouteImport } from './routes/matrix'
 import { Route as PlaybooksRouteImport } from './routes/playbooks'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.xml]'
-import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
 import { Route as TacticsSlugRouteImport } from './routes/tactics.$slug'
 import { Route as TechniquesIdRouteImport } from './routes/techniques.$id'
 
@@ -43,11 +42,6 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SitemapXmlRoute = SitemapXmlRouteImport.update({
-  id: '/sitemap/xml',
-  path: '/sitemap/xml',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const TacticsSlugRoute = TacticsSlugRouteImport.update({
   id: '/tactics/$slug',
   path: '/tactics/$slug',
@@ -65,7 +59,6 @@ export interface FileRoutesByFullPath {
   '/playbooks': typeof PlaybooksRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/sitemap/xml': typeof SitemapXmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
   '/techniques/$id': typeof TechniquesIdRoute
 }
@@ -75,7 +68,6 @@ export interface FileRoutesByTo {
   '/playbooks': typeof PlaybooksRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/sitemap/xml': typeof SitemapXmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
   '/techniques/$id': typeof TechniquesIdRoute
 }
@@ -86,7 +78,6 @@ export interface FileRoutesById {
   '/playbooks': typeof PlaybooksRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/sitemap/xml': typeof SitemapXmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
   '/techniques/$id': typeof TechniquesIdRoute
 }
@@ -98,7 +89,6 @@ export interface FileRouteTypes {
     | '/playbooks'
     | '/search'
     | '/sitemap.xml'
-    | '/sitemap/xml'
     | '/tactics/$slug'
     | '/techniques/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -108,7 +98,6 @@ export interface FileRouteTypes {
     | '/playbooks'
     | '/search'
     | '/sitemap.xml'
-    | '/sitemap/xml'
     | '/tactics/$slug'
     | '/techniques/$id'
   id:
@@ -118,7 +107,6 @@ export interface FileRouteTypes {
     | '/playbooks'
     | '/search'
     | '/sitemap.xml'
-    | '/sitemap/xml'
     | '/tactics/$slug'
     | '/techniques/$id'
   fileRoutesById: FileRoutesById
@@ -129,7 +117,6 @@ export interface RootRouteChildren {
   PlaybooksRoute: typeof PlaybooksRoute
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  SitemapXmlRoute: typeof SitemapXmlRoute
   TacticsSlugRoute: typeof TacticsSlugRoute
   TechniquesIdRoute: typeof TechniquesIdRoute
 }
@@ -171,13 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/sitemap/xml': {
-      id: '/sitemap/xml'
-      path: '/sitemap/xml'
-      fullPath: '/sitemap/xml'
-      preLoaderRoute: typeof SitemapXmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/tactics/$slug': {
       id: '/tactics/$slug'
       path: '/tactics/$slug'
@@ -201,10 +181,19 @@ const rootRouteChildren: RootRouteChildren = {
   PlaybooksRoute: PlaybooksRoute,
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  SitemapXmlRoute: SitemapXmlRoute,
   TacticsSlugRoute: TacticsSlugRoute,
   TechniquesIdRoute: TechniquesIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

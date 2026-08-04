@@ -50,7 +50,12 @@ function SearchPage() {
 
   const results = useMemo(() => {
     const query = q.trim().toLowerCase();
-    let filtered = getAllTechniquesAndSubs();
+    const seen = new Set<string>();
+    let filtered = getAllTechniquesAndSubs().filter((t) => {
+      if (seen.has(t.id)) return false;
+      seen.add(t.id);
+      return true;
+    });
 
     if (tactic) {
       filtered = filtered.filter((t) => t.tactic.slug === tactic);

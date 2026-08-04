@@ -27,8 +27,9 @@ export const Route = createFileRoute("/playbooks")({
             url: "https://mitreattack.lovable.app/playbooks",
             hasPart: PLAYBOOKS.map((p) => ({
               "@type": "HowTo",
-              name: p.name,
-              description: p.summary,
+              name: p.title,
+              description: p.trigger,
+
               url: "https://mitreattack.lovable.app/playbooks",
             })),
           }),

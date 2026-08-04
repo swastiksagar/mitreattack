@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { TACTICS } from "@/data/attack";
+import { TACTICS, TECHNIQUE_COUNT, SUBTECHNIQUE_COUNT } from "@/data/attack";
 
 export const Route = createFileRoute("/matrix")({
   head: () => {
     const title = "ATT&CK Navigator Matrix — MITRE ATT&CK Field Reference";
     const description =
-      "A lightweight kill-chain grid of all 14 MITRE ATT&CK enterprise tactics and their techniques.";
+      `A lightweight kill-chain grid of all 14 MITRE ATT&CK enterprise tactics, ${TECHNIQUE_COUNT} techniques and ${SUBTECHNIQUE_COUNT} sub-techniques.`;
     return {
       meta: [
         { title },
@@ -89,6 +89,11 @@ function MatrixPage() {
                       <span className="font-serif text-[13px] font-semibold leading-snug group-hover:text-accent">
                         {tech.name}
                       </span>
+                      {tech.subTechniques && tech.subTechniques.length > 0 && (
+                        <span className="font-mono text-[10px] text-ink-dim">
+                          {tech.subTechniques.length} sub
+                        </span>
+                      )}
                     </Link>
                   </li>
                 ))}

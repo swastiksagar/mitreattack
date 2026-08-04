@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { TACTICS, getTechnique, getTechniqueIndex, getAllTechniques, type TechniqueWithTactic } from "@/data/attack";
+import { TACTICS, getTechnique, getAllTechniquesAndSubs, type TechniqueWithTactic } from "@/data/attack";
 
 export const Route = createFileRoute("/techniques/$id")({
   loader: ({ params }): { technique: TechniqueWithTactic } => {
@@ -79,8 +79,8 @@ export const Route = createFileRoute("/techniques/$id")({
 
 function TechniquePage() {
   const { technique } = Route.useLoaderData() as { technique: TechniqueWithTactic };
-  const all = getAllTechniques();
-  const index = getTechniqueIndex(technique.id);
+  const all = getAllTechniquesAndSubs();
+  const index = all.findIndex((t) => t.id === technique.id);
   const prev = index > 0 ? all[index - 1] : undefined;
   const next = index < all.length - 1 ? all[index + 1] : undefined;
   const prevTactic = TACTICS.find((t) => t.order === technique.tactic.order - 1);
@@ -97,6 +97,14 @@ function TechniquePage() {
           {technique.tactic.name}
         </Link>
         <span className="px-2">/</span>
+        {technique.parent && (
+          <>
+            <Link to="/techniques/$id" params={{ id: technique.parent.id }} className="link-inline">
+              {technique.parent.id}
+            </Link>
+            <span className="px-2">/</span>
+          </>
+        )}
         <span>{technique.id}</span>
       </nav>
 
@@ -106,7 +114,26 @@ function TechniquePage() {
       <h1 className="font-serif text-[clamp(32px,5vw,52px)] font-semibold leading-[1.05] tracking-tight">
         {technique.name}
       </h1>
-      <p className="my-5 max-w-[62ch] font-mono text-xs text-ink-dim">{technique.id}</p>
+      <div className="my-5 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-xs text-ink-dim">
+        <span>{technique.id}</span>
+        {technique.parent && (
+          <span>
+            Sub-technique of{" "}
+            <Link to="/techniques/$id" params={{ id: technique.parent.id }} className="link-inline">
+              {technique.parent.name}
+            </Link>
+          </span>
+        )}
+        {technique.platforms.length > 0 && <span>{technique.platforms.join(" · ")}</span>}
+        <a
+          href={technique.url}
+          target="_blank"
+          rel="noreferrer"
+          className="link-inline"
+        >
+          attack.mitre.org
+        </a>
+      </div>
 
       <div className="rule-top mt-8 pt-8">
         <p className="mb-3.5 max-w-[68ch] text-[15.5px] text-ink-dim">{technique.summary}</p>
@@ -146,6 +173,32 @@ function TechniquePage() {
           </p>
         </div>
       </div>
+
+      {technique.subTechniques && technique.subTechniques.length > 0 && (
+        <section className="mt-10">
+          <p className="mb-2 font-mono text-xs tracking-wide text-ink-dim">
+            {technique.subTechniques.length} sub-techniques
+          </p>
+          <h2 className="mb-5 font-serif text-2xl font-semibold">How it shows up in practice</h2>
+          <ol className="rule-top divide-y divide-border">
+            {technique.subTechniques.map((sub) => (
+              <li key={sub.id} className="py-5">
+                <Link to="/techniques/$id" params={{ id: sub.id }} className="group block">
+                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="rounded-sm border border-line-hard px-1.5 py-0.5 font-mono text-[11px]">
+                      {sub.id}
+                    </span>
+                    <h3 className="font-serif text-lg font-semibold group-hover:text-accent">
+                      {sub.name}
+                    </h3>
+                  </div>
+                  <p className="mt-2 max-w-[68ch] text-[15px] text-ink-dim">{sub.summary}</p>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )}
 
       <div className="mt-8 rounded-sm border border-border p-5">
         <p className="mb-3 font-mono text-[11px] uppercase tracking-wide text-foreground/80">

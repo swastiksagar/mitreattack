@@ -105,12 +105,28 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "WebSite",
-          name: "ATT&CK Field Reference",
-          description:
-            "A plain-language field reference to the MITRE ATT&CK enterprise matrix for SOC analysts.",
+          "@graph": [
+            {
+              "@type": "Organization",
+              "@id": "https://mitreattack.lovable.app/#organization",
+              name: "ATT&CK Field Reference",
+              url: "https://mitreattack.lovable.app",
+              description:
+                "A plain-language field reference to the MITRE ATT&CK enterprise matrix for SOC analysts.",
+            },
+            {
+              "@type": "WebSite",
+              "@id": "https://mitreattack.lovable.app/#website",
+              name: "ATT&CK Field Reference",
+              url: "https://mitreattack.lovable.app",
+              publisher: { "@id": "https://mitreattack.lovable.app/#organization" },
+              description:
+                "A plain-language field reference to the MITRE ATT&CK enterprise matrix for SOC analysts.",
+            },
+          ],
         }),
       },
+
     ],
   }),
   shellComponent: RootShell,

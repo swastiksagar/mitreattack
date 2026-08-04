@@ -10,11 +10,36 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MatrixRouteImport } from './routes/matrix'
+import { Route as PlaybooksRouteImport } from './routes/playbooks'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.xml]'
 import { Route as TacticsSlugRouteImport } from './routes/tactics.$slug'
+import { Route as TechniquesIdRouteImport } from './routes/techniques.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatrixRoute = MatrixRouteImport.update({
+  id: '/matrix',
+  path: '/matrix',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlaybooksRoute = PlaybooksRouteImport.update({
+  id: '/playbooks',
+  path: '/playbooks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TacticsSlugRoute = TacticsSlugRouteImport.update({
@@ -22,31 +47,78 @@ const TacticsSlugRoute = TacticsSlugRouteImport.update({
   path: '/tactics/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TechniquesIdRoute = TechniquesIdRouteImport.update({
+  id: '/techniques/$id',
+  path: '/techniques/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/matrix': typeof MatrixRoute
+  '/playbooks': typeof PlaybooksRoute
+  '/search': typeof SearchRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
+  '/techniques/$id': typeof TechniquesIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/matrix': typeof MatrixRoute
+  '/playbooks': typeof PlaybooksRoute
+  '/search': typeof SearchRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
+  '/techniques/$id': typeof TechniquesIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/matrix': typeof MatrixRoute
+  '/playbooks': typeof PlaybooksRoute
+  '/search': typeof SearchRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
+  '/techniques/$id': typeof TechniquesIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/tactics/$slug'
+  fullPaths:
+    | '/'
+    | '/matrix'
+    | '/playbooks'
+    | '/search'
+    | '/sitemap.xml'
+    | '/tactics/$slug'
+    | '/techniques/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/tactics/$slug'
-  id: '__root__' | '/' | '/tactics/$slug'
+  to:
+    | '/'
+    | '/matrix'
+    | '/playbooks'
+    | '/search'
+    | '/sitemap.xml'
+    | '/tactics/$slug'
+    | '/techniques/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/matrix'
+    | '/playbooks'
+    | '/search'
+    | '/sitemap.xml'
+    | '/tactics/$slug'
+    | '/techniques/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  MatrixRoute: typeof MatrixRoute
+  PlaybooksRoute: typeof PlaybooksRoute
+  SearchRoute: typeof SearchRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TacticsSlugRoute: typeof TacticsSlugRoute
+  TechniquesIdRoute: typeof TechniquesIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,6 +130,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/matrix': {
+      id: '/matrix'
+      path: '/matrix'
+      fullPath: '/matrix'
+      preLoaderRoute: typeof MatrixRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/playbooks': {
+      id: '/playbooks'
+      path: '/playbooks'
+      fullPath: '/playbooks'
+      preLoaderRoute: typeof PlaybooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tactics/$slug': {
       id: '/tactics/$slug'
       path: '/tactics/$slug'
@@ -65,12 +165,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TacticsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/techniques/$id': {
+      id: '/techniques/$id'
+      path: '/techniques/$id'
+      fullPath: '/techniques/$id'
+      preLoaderRoute: typeof TechniquesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  MatrixRoute: MatrixRoute,
+  PlaybooksRoute: PlaybooksRoute,
+  SearchRoute: SearchRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TacticsSlugRoute: TacticsSlugRoute,
+  TechniquesIdRoute: TechniquesIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

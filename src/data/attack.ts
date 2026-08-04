@@ -16,6 +16,10 @@ export interface Tactic {
   techniques: Technique[];
 }
 
+export interface TechniqueWithTactic extends Technique {
+  tactic: Tactic;
+}
+
 export const TACTICS: Tactic[] = [
   {
     id: "TA0043",
@@ -758,4 +762,18 @@ export const TECHNIQUE_COUNT = TACTICS.reduce((n, t) => n + t.techniques.length,
 
 export function getTactic(slug: string): Tactic | undefined {
   return TACTICS.find((t) => t.slug === slug);
+}
+
+export function getAllTechniques(): TechniqueWithTactic[] {
+  return TACTICS.flatMap((tactic) =>
+    tactic.techniques.map((technique) => ({ ...technique, tactic })),
+  );
+}
+
+export function getTechnique(id: string): TechniqueWithTactic | undefined {
+  return getAllTechniques().find((t) => t.id === id);
+}
+
+export function getTechniqueIndex(id: string): number {
+  return getAllTechniques().findIndex((t) => t.id === id);
 }

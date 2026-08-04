@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { TACTICS, getAllTechniques } from "@/data/attack";
+import { TACTICS, getAllTechniquesAndSubs } from "@/data/attack";
 import { PLAYBOOKS } from "@/data/playbooks";
 
 // TODO: replace with your project URL once a project name or custom domain is set.
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             changefreq: "monthly" as const,
             priority: "0.7",
           })),
-          ...getAllTechniques().map((t) => ({
+          ...getAllTechniquesAndSubs().map((t) => ({
             path: `/techniques/${t.id}`,
             changefreq: "monthly" as const,
             priority: "0.6",

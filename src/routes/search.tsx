@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
-import { TACTICS, getAllTechniques } from "@/data/attack";
+import { TACTICS, getAllTechniquesAndSubs, TECHNIQUE_COUNT, SUBTECHNIQUE_COUNT } from "@/data/attack";
 
 export const Route = createFileRoute("/search")({
   validateSearch: (search) => ({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/search")({
   }),
   head: () => {
     const title = "Search Techniques — MITRE ATT&CK Field Reference";
-    const description = "Search all 69 enterprise techniques by ID, name, summary, or detection telemetry.";
+    const description = `Search all ${TECHNIQUE_COUNT} enterprise techniques and ${SUBTECHNIQUE_COUNT} sub-techniques by ID, name, summary, or detection telemetry.`;
     return {
       meta: [
         { title },
@@ -50,7 +50,7 @@ function SearchPage() {
 
   const results = useMemo(() => {
     const query = q.trim().toLowerCase();
-    let filtered = getAllTechniques();
+    let filtered = getAllTechniquesAndSubs();
 
     if (tactic) {
       filtered = filtered.filter((t) => t.tactic.slug === tactic);
@@ -169,7 +169,10 @@ function SearchPage() {
                 <h2 className="font-serif text-xl font-semibold group-hover:text-accent">
                   {highlight(tech.name, q)}
                 </h2>
-                <span className="font-mono text-[11px] text-ink-dim">{tech.tactic.name}</span>
+                <span className="font-mono text-[11px] text-ink-dim">
+                  {tech.tactic.name}
+                  {tech.parent ? ` · sub-technique of ${tech.parent.name}` : ""}
+                </span>
               </div>
               <p className="mt-2 max-w-[68ch] text-[15px] text-ink-dim">
                 {highlight(tech.summary, q)}

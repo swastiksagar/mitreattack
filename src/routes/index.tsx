@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { TACTICS, TACTIC_COUNT, TECHNIQUE_COUNT } from "@/data/attack";
+import { TACTICS, TACTIC_COUNT, TECHNIQUE_COUNT, SUBTECHNIQUE_COUNT } from "@/data/attack";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "14 tactics, 68 techniques, and the log sources that catch them. A free field reference for SOC analysts.",
+          `14 tactics, ${TECHNIQUE_COUNT} techniques, ${SUBTECHNIQUE_COUNT} sub-techniques, and the log sources that catch them. A free field reference for SOC analysts.`,
       },
       { property: "og:url", content: "/" },
       { property: "og:type", content: "website" },
@@ -30,6 +30,7 @@ export const Route = createFileRoute("/")({
 const STATS = [
   { label: "Tactics", value: String(TACTIC_COUNT) },
   { label: "Techniques", value: String(TECHNIQUE_COUNT) },
+  { label: "Sub-techniques", value: String(SUBTECHNIQUE_COUNT) },
   { label: "Matrix", value: "Enterprise" },
   { label: "Kill-chain order", value: "Recon → Impact" },
 ];
@@ -45,7 +46,7 @@ function Index() {
           MITRE ATT&amp;CK <span className="font-normal text-ink-dim">in kill-chain order</span>
         </h1>
         <p className="my-5 max-w-[62ch] font-serif text-lg text-ink-dim">
-          Fourteen tactics, {TECHNIQUE_COUNT} techniques, and for every single one, the log source
+          Fourteen tactics, {TECHNIQUE_COUNT} techniques, {SUBTECHNIQUE_COUNT} sub-techniques, and for every single one, the log source
           that actually catches it. Not a taxonomy exercise — a reference you keep open in the
           second monitor while a queue fills up.
         </p>
@@ -111,7 +112,7 @@ function Index() {
 
       <section id="matrix" className="mx-auto max-w-[980px] scroll-mt-20 px-7 pb-4">
         <p className="mb-2 font-mono text-xs tracking-wide text-ink-dim">
-          Enterprise · {TACTIC_COUNT} tactics · {TECHNIQUE_COUNT} techniques
+          Enterprise · {TACTIC_COUNT} tactics · {TECHNIQUE_COUNT} techniques · {SUBTECHNIQUE_COUNT} sub-techniques
         </p>
         <h2 className="mb-4 font-serif text-2xl font-semibold">The matrix</h2>
         <p className="mb-7 max-w-[68ch] text-[15.5px] text-ink-dim">

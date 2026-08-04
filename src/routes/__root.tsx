@@ -135,7 +135,7 @@ function SiteHeader() {
           </span>
           ATT&amp;CK Field Reference
         </Link>
-        <nav className="hidden gap-5 font-mono text-xs text-ink-dim sm:flex">
+        <nav aria-label="Primary" className="hidden gap-5 font-mono text-xs text-ink-dim sm:flex">
           <a href="/#matrix" className="transition-colors hover:text-foreground">
             Matrix
           </a>

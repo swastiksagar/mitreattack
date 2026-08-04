@@ -49,7 +49,7 @@ function TacticPage() {
 
   return (
     <article className="mx-auto max-w-[980px] px-7 pt-12 pb-4">
-      <nav className="mb-6 font-mono text-xs text-ink-dim">
+      <nav aria-label="Breadcrumb" className="mb-6 font-mono text-xs text-ink-dim">
         <Link to="/" className="link-inline">
           Matrix
         </Link>
@@ -103,7 +103,7 @@ function TacticPage() {
         </ol>
       </section>
 
-      <nav className="rule-top mt-10 flex flex-wrap justify-between gap-4 pt-6 font-mono text-xs">
+      <nav aria-label="Tactic pagination" className="rule-top mt-10 flex flex-wrap justify-between gap-4 pt-6 font-mono text-xs">
         {prev ? (
           <Link to="/tactics/$slug" params={{ slug: prev.slug }} className="link-inline">
             ← {String(prev.order).padStart(2, "0")} {prev.name}

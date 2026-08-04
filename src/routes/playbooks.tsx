@@ -16,7 +16,27 @@ export const Route = createFileRoute("/playbooks")({
         { property: "og:type", content: "website" },
       ],
       links: [{ rel: "canonical", href: "/playbooks" }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: "Alert Triage Playbooks",
+            description,
+            url: "https://mitreattack.lovable.app/playbooks",
+            hasPart: PLAYBOOKS.map((p) => ({
+              "@type": "HowTo",
+              name: p.title,
+              description: p.trigger,
+
+              url: "https://mitreattack.lovable.app/playbooks",
+            })),
+          }),
+        },
+      ],
     };
+
   },
   component: PlaybooksPage,
 });

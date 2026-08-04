@@ -14,8 +14,12 @@ export const Route = createFileRoute("/techniques/$id")({
       };
     }
     const { technique } = loaderData;
-    const title = `${technique.id} ${technique.name} — MITRE ATT&CK Technique`;
-    const description = `${technique.summary} Detection: ${technique.detection}`;
+    const base = `${technique.id} ${technique.name}`;
+    const title =
+      base.length <= 42 ? `${base} — ATT&CK Technique` : base.length <= 60 ? base : `${base.slice(0, 57).trimEnd()}…`;
+    const raw = `${technique.summary} Detection: ${technique.detection}`.replace(/\s+/g, " ").trim();
+    const description = raw.length > 158 ? `${raw.slice(0, 157).trimEnd()}…` : raw;
+
     return {
       meta: [
         { title },

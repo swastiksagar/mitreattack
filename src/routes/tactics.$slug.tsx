@@ -14,8 +14,14 @@ export const Route = createFileRoute("/tactics/$slug")({
       };
     }
     const { tactic } = loaderData;
-    const title = `${tactic.name} (${tactic.id}) — MITRE ATT&CK Tactic`;
-    const description = `${tactic.objective} ${tactic.techniques.length} key techniques with the telemetry that detects each one.`;
+    const rawTitle = `${tactic.name} (${tactic.id}) — ATT&CK Tactic`;
+    const title = rawTitle.length > 60 ? `${tactic.name} — ATT&CK Tactic` : rawTitle;
+    const rawDesc =
+      `${tactic.objective} ${tactic.techniques.length} key ATT&CK techniques under ${tactic.name}, with the telemetry that detects each one.`
+        .replace(/\s+/g, " ")
+        .trim();
+    const description = rawDesc.length > 158 ? `${rawDesc.slice(0, 157).trimEnd()}…` : rawDesc;
+
     return {
       meta: [
         { title },

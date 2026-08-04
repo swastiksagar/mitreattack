@@ -14,21 +14,19 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
+    <div className="mx-auto flex min-h-[60vh] max-w-[980px] flex-col justify-center px-7">
+      <p className="font-mono text-xs tracking-wide text-ink-dim">ERR_404</p>
+      <h1 className="mt-4 font-serif text-5xl font-semibold">Page not found</h1>
+      <p className="mt-3 max-w-[60ch] font-serif text-lg text-ink-dim">
+        That tactic or technique isn't in this reference. Head back to the matrix.
+      </p>
+      <div className="mt-7">
+        <Link
+          to="/"
+          className="inline-flex rounded-sm border border-foreground bg-foreground px-4 py-2.5 font-mono text-xs text-background transition-colors hover:border-accent hover:bg-accent"
+        >
+          Back to the matrix
+        </Link>
       </div>
     </div>
   );
@@ -42,31 +40,28 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
-          </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Go home
-          </a>
-        </div>
+    <div className="mx-auto flex min-h-[60vh] max-w-[980px] flex-col justify-center px-7">
+      <p className="font-mono text-xs tracking-wide text-ink-dim">ERR_500</p>
+      <h1 className="mt-4 font-serif text-4xl font-semibold">This page didn't load</h1>
+      <p className="mt-3 max-w-[60ch] font-serif text-lg text-ink-dim">
+        Something failed on our end. Try again, or go back to the matrix.
+      </p>
+      <div className="mt-7 flex flex-wrap gap-3">
+        <button
+          onClick={() => {
+            router.invalidate();
+            reset();
+          }}
+          className="inline-flex rounded-sm border border-foreground bg-foreground px-4 py-2.5 font-mono text-xs text-background transition-colors hover:border-accent hover:bg-accent"
+        >
+          Try again
+        </button>
+        <a
+          href="/"
+          className="inline-flex rounded-sm border border-line-hard px-4 py-2.5 font-mono text-xs text-ink-dim transition-colors hover:border-foreground hover:text-foreground"
+        >
+          Go home
+        </a>
       </div>
     </div>
   );
@@ -77,21 +72,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "ATT&CK Field Reference — Enterprise Tactics & Techniques" },
+      {
+        name: "description",
+        content:
+          "A plain-language field reference to the MITRE ATT&CK enterprise matrix: 14 tactics in kill-chain order, with techniques and the telemetry that detects them.",
+      },
+      { property: "og:site_name", content: "ATT&CK Field Reference" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: appCss,
+        href: "https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "ATT&CK Field Reference",
+          description:
+            "A plain-language field reference to the MITRE ATT&CK enterprise matrix for SOC analysts.",
+        }),
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -114,13 +125,66 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function SiteHeader() {
+  return (
+    <header className="sticky top-0 z-30 border-b border-border bg-background/92 backdrop-blur-sm">
+      <div className="mx-auto flex h-[60px] max-w-[980px] items-center justify-between px-7">
+        <Link to="/" className="flex items-center gap-2.5 font-mono text-[13px] font-semibold tracking-wide">
+          <span className="flex h-5 w-5 items-center justify-center border-[1.5px] border-foreground text-[11px] font-bold">
+            A
+          </span>
+          ATT&amp;CK Field Reference
+        </Link>
+        <nav className="hidden gap-5 font-mono text-xs text-ink-dim sm:flex">
+          <a href="/#matrix" className="transition-colors hover:text-foreground">
+            Matrix
+          </a>
+          <a href="/#how" className="transition-colors hover:text-foreground">
+            How to read it
+          </a>
+          <a href="/#triage" className="transition-colors hover:text-foreground">
+            Triage
+          </a>
+        </nav>
+      </div>
+    </header>
+  );
+}
+
+function SiteFooter() {
+  return (
+    <footer className="mt-16 border-t border-border py-10">
+      <div className="mx-auto max-w-[980px] px-7 font-mono text-xs leading-relaxed text-ink-dim">
+        <p>
+          Independent study reference. ATT&amp;CK® is a registered trademark of The MITRE
+          Corporation, which does not endorse this page. Canonical source:{" "}
+          <a
+            href="https://attack.mitre.org"
+            className="link-inline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            attack.mitre.org
+          </a>
+          .
+        </p>
+        <p className="mt-3">Enterprise matrix · 14 tactics · free to use · no signup</p>
+      </div>
+    </footer>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteHeader />
+      <main>
+        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+        <Outlet />
+      </main>
+      <SiteFooter />
     </QueryClientProvider>
   );
 }

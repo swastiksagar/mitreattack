@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MatrixRouteImport } from './routes/matrix'
 import { Route as PlaybooksRouteImport } from './routes/playbooks'
 import { Route as SearchRouteImport } from './routes/search'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.xml]'
 import { Route as SitemapXmlRouteImport } from './routes/sitemap.xml'
 import { Route as TacticsSlugRouteImport } from './routes/tactics.$slug'
 import { Route as TechniquesIdRouteImport } from './routes/techniques.$id'
@@ -37,6 +38,11 @@ const SearchRoute = SearchRouteImport.update({
   path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapXmlRoute = SitemapXmlRouteImport.update({
   id: '/sitemap/xml',
   path: '/sitemap/xml',
@@ -58,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/matrix': typeof MatrixRoute
   '/playbooks': typeof PlaybooksRoute
   '/search': typeof SearchRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sitemap/xml': typeof SitemapXmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
   '/techniques/$id': typeof TechniquesIdRoute
@@ -67,6 +74,7 @@ export interface FileRoutesByTo {
   '/matrix': typeof MatrixRoute
   '/playbooks': typeof PlaybooksRoute
   '/search': typeof SearchRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sitemap/xml': typeof SitemapXmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
   '/techniques/$id': typeof TechniquesIdRoute
@@ -77,6 +85,7 @@ export interface FileRoutesById {
   '/matrix': typeof MatrixRoute
   '/playbooks': typeof PlaybooksRoute
   '/search': typeof SearchRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sitemap/xml': typeof SitemapXmlRoute
   '/tactics/$slug': typeof TacticsSlugRoute
   '/techniques/$id': typeof TechniquesIdRoute
@@ -88,6 +97,7 @@ export interface FileRouteTypes {
     | '/matrix'
     | '/playbooks'
     | '/search'
+    | '/sitemap.xml'
     | '/sitemap/xml'
     | '/tactics/$slug'
     | '/techniques/$id'
@@ -97,6 +107,7 @@ export interface FileRouteTypes {
     | '/matrix'
     | '/playbooks'
     | '/search'
+    | '/sitemap.xml'
     | '/sitemap/xml'
     | '/tactics/$slug'
     | '/techniques/$id'
@@ -106,6 +117,7 @@ export interface FileRouteTypes {
     | '/matrix'
     | '/playbooks'
     | '/search'
+    | '/sitemap.xml'
     | '/sitemap/xml'
     | '/tactics/$slug'
     | '/techniques/$id'
@@ -116,6 +128,7 @@ export interface RootRouteChildren {
   MatrixRoute: typeof MatrixRoute
   PlaybooksRoute: typeof PlaybooksRoute
   SearchRoute: typeof SearchRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SitemapXmlRoute: typeof SitemapXmlRoute
   TacticsSlugRoute: typeof TacticsSlugRoute
   TechniquesIdRoute: typeof TechniquesIdRoute
@@ -151,6 +164,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap/xml': {
       id: '/sitemap/xml'
       path: '/sitemap/xml'
@@ -180,6 +200,7 @@ const rootRouteChildren: RootRouteChildren = {
   MatrixRoute: MatrixRoute,
   PlaybooksRoute: PlaybooksRoute,
   SearchRoute: SearchRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SitemapXmlRoute: SitemapXmlRoute,
   TacticsSlugRoute: TacticsSlugRoute,
   TechniquesIdRoute: TechniquesIdRoute,

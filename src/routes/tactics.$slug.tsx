@@ -102,9 +102,30 @@ function TacticPage() {
                   {tech.detection}
                 </p>
               </Link>
+              {tech.subTechniques && tech.subTechniques.length > 0 && (
+                <div className="mt-4">
+                  <p className="mb-2 font-mono text-[11px] uppercase tracking-wide text-ink-dim">
+                    {tech.subTechniques.length} sub-techniques
+                  </p>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {tech.subTechniques.map((sub) => (
+                      <li key={sub.id}>
+                        <Link
+                          to="/techniques/$id"
+                          params={{ id: sub.id }}
+                          className="inline-flex rounded-sm border border-border bg-paper-alt px-2 py-1 font-mono text-[11px] transition-colors hover:border-foreground hover:text-accent"
+                        >
+                          {sub.id} {sub.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </li>
           ))}
         </ol>
+
       </section>
 
       <nav aria-label="Tactic pagination" className="rule-top mt-10 flex flex-wrap justify-between gap-4 pt-6 font-mono text-xs">

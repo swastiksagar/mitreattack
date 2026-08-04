@@ -73,15 +73,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ATT&CK Field Reference — Enterprise Tactics & Techniques" },
+      { title: "MITRE ATT&CK Enterprise Matrix — Plain-Language Field Reference" },
       {
         name: "description",
         content:
-          "A plain-language field reference to the MITRE ATT&CK enterprise matrix: 14 tactics in kill-chain order, with techniques and the telemetry that detects them.",
+          "All 14 MITRE ATT&CK enterprise tactics in kill-chain order, each with key techniques and the exact telemetry that detects them. Written for working SOC analysts.",
       },
       { property: "og:site_name", content: "ATT&CK Field Reference" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "MITRE ATT&CK Enterprise Matrix — Plain-Language Field Reference" },
+      { name: "twitter:title", content: "MITRE ATT&CK Enterprise Matrix — Plain-Language Field Reference" },
+      { property: "og:description", content: "All 14 MITRE ATT&CK enterprise tactics in kill-chain order, each with key techniques and the exact telemetry that detects them. Written for working SOC analysts." },
+      { name: "twitter:description", content: "All 14 MITRE ATT&CK enterprise tactics in kill-chain order, each with key techniques and the exact telemetry that detects them. Written for working SOC analysts." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/6405aaa0-5f86-4808-834c-3181aec3ba98" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/6405aaa0-5f86-4808-834c-3181aec3ba98" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

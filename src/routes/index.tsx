@@ -4,7 +4,7 @@ import { TACTICS, TACTIC_COUNT, TECHNIQUE_COUNT, SUBTECHNIQUE_COUNT } from "@/da
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MITRE ATT&CK Enterprise Matrix — Plain-Language Field Reference" },
+      { title: "MITRE ATT&CK Matrix — Plain-Language Field Reference" },
       {
         name: "description",
         content:
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:title",
-        content: "MITRE ATT&CK Enterprise Matrix — Plain-Language Field Reference",
+        content: "MITRE ATT&CK Matrix — Plain-Language Field Reference",
       },
       {
         property: "og:description",

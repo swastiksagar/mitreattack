@@ -1,10 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { TACTICS, getAllTechniquesAndSubs } from "@/data/attack";
-import { PLAYBOOKS } from "@/data/playbooks";
 
-// TODO: replace with your project URL once a project name or custom domain is set.
-const BASE_URL = "";
+const BASE_URL = "https://mitreattack.lovable.app";
 
 interface SitemapEntry {
   path: string;
@@ -28,11 +26,6 @@ export const Route = createFileRoute("/sitemap.xml")({
           })),
           ...getAllTechniquesAndSubs().map((t) => ({
             path: `/techniques/${t.id}`,
-            changefreq: "monthly" as const,
-            priority: "0.6",
-          })),
-          ...PLAYBOOKS.map((p) => ({
-            path: `/playbooks#${p.slug}`,
             changefreq: "monthly" as const,
             priority: "0.6",
           })),

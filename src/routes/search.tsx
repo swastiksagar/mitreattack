@@ -2,8 +2,14 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { TACTICS, getAllTechniquesAndSubs, TECHNIQUE_COUNT, SUBTECHNIQUE_COUNT } from "@/data/attack";
 
+interface SearchParams {
+  q?: string;
+  tactic?: string;
+  sort?: string;
+}
+
 export const Route = createFileRoute("/search")({
-  validateSearch: (search) => ({
+  validateSearch: (search): SearchParams => ({
     q: String(search["q"] ?? ""),
     tactic: String(search["tactic"] ?? ""),
     sort: String(search["sort"] ?? "relevance"),
@@ -45,7 +51,10 @@ function escapeRegExp(string: string) {
 }
 
 function SearchPage() {
-  const { q, tactic, sort } = Route.useSearch();
+  const params = Route.useSearch();
+  const q = params.q ?? "";
+  const tactic = params.tactic ?? "";
+  const sort = params.sort ?? "relevance";
   const navigate = useNavigate({ from: "/search" });
 
   const results = useMemo(() => {

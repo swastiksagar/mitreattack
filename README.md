@@ -11,7 +11,8 @@
 - ***14 tactics** in kill-chain order, Reconnaissance through Impact.*
 - ***211 techniques** with summaries, platforms and detection guidance.*
 - ***468 sub-techniques** with their own detail pages and parent breadcrumbs.*
-- ***5 triage playbooks** for the alerts that actually wake you up: PowerShell, LSASS dumping, persistence, lateral movement and defence evasion.*
+- ***245 technique listings and 629 sub-technique listings** across the tactic pages, because some techniques serve more than one tactic.*
+- ***5 triage playbooks** for the alerts that actually wake you up: suspicious PowerShell, LSASS access and credential dumping, lateral movement over RDP/SMB, new accounts added to privileged groups, and mass file archiving before exfiltration.*
 
 ## Pages
 
@@ -21,7 +22,7 @@
 - ***`/techniques/{id}`** — one page per technique or sub-technique: detection notes, platforms, kill-chain context, and a link to the MITRE ATT&CK entry.*
 - ***`/search`** — search across all techniques and sub-techniques by name, ID, or detection text, with tactic filters.*
 - ***`/playbooks`** — alert triage workflows: trigger, data source, triage questions, escalation criteria.*
-- ***`/sitemap.xml`** and **`/robots.txt`** — 697 URLs, absolute, no fragments.*
+- ***`/sitemap.xml`** and **`/robots.txt`** — 697 unique URLs across 892 entries, absolute, no fragments.*
 
 ## Data
 
@@ -33,11 +34,11 @@
 
 ## SEO
 
-*Per-route titles, descriptions, canonicals and Open Graph tags; JSON-LD for Organization, WebSite, CollectionPage and HowTo; a short home title under 60 characters; Google Search Console verified with the sitemap submitted.*
+*Per-route titles, descriptions, canonicals and Open Graph tags; JSON-LD for Organization, WebSite, CollectionPage, HowTo and Article; a short home title under 60 characters; Google Search Console verified with the sitemap submitted.*
 
 ## Tech stack
 
-*TanStack Start v1 on React 19, Vite 7, Tailwind CSS v4 with OKLCH design tokens, all content rendered from static data in `src/data/`.*
+*TanStack Start v1 on React 19, Vite 8, Tailwind CSS v4 with OKLCH design tokens, all content rendered from static data in `src/data/`.*
 
 ## Development
 
